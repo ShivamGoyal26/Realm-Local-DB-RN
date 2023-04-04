@@ -42,7 +42,7 @@ export const checkGalleryPermissions = async () => {
       result === 'blocked' ||
       result === 'unavailable'
     ) {
-      Alert.alert('Gallery Permission Denied', 'Please provide access', [
+      return Alert.alert('Gallery Permission Denied', 'Please provide access', [
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),
@@ -71,7 +71,7 @@ export const checkFileWritePermissions = async () => {
       result === 'blocked' ||
       result === 'unavailable'
     ) {
-      Alert.alert('Gallery Permission Denied', 'Please provide access', [
+      return Alert.alert('Write Permission Denied', 'Please provide access', [
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),

@@ -17,7 +17,10 @@ import {useFocusEffect} from '@react-navigation/native';
 
 // Files
 import realm from '../../schemas/realm';
-import {chooseImageFromGallery} from '../../services/ImageManager';
+import {
+  chooseImageFromCamera,
+  chooseImageFromGallery,
+} from '../../services/ImageManager';
 import {generateUniqueId} from '../../utils';
 
 const TodoList = (props: any) => {
@@ -58,6 +61,21 @@ const TodoList = (props: any) => {
   const pickGalleryImage = async () => {
     const res = await chooseImageFromGallery();
     setImageData(res);
+  };
+
+  const pickCameraImage = async () => {
+    const res = await chooseImageFromCamera();
+    setImageData(res);
+  };
+
+  const imageManager = async () => {
+    return Alert.alert('Pick images', 'Please select your options', [
+      {
+        text: 'Gallery',
+        onPress: () => pickGalleryImage(),
+      },
+      {text: 'Camera', onPress: () => pickCameraImage()},
+    ]);
   };
 
   useFocusEffect(
@@ -160,7 +178,7 @@ const TodoList = (props: any) => {
             source={{uri: imageData.uri}}
           />
         ) : null}
-        <TouchableOpacity onPress={pickGalleryImage}>
+        <TouchableOpacity onPress={imageManager}>
           <Text>Pick Image</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={createTodo}>

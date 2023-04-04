@@ -46,7 +46,7 @@ export const chooseImageFromGallery = async () => {
 export const chooseImageFromCamera = async () => {
   try {
     let res = await checkCameraPermission();
-    if (!res) {
+    if (res) {
       const options: any = {
         title: 'Select Image',
         storageOptions: {

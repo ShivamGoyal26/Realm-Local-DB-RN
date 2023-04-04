@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {
-    Alert,
+  Alert,
   Image,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -12,43 +13,51 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import realm from '../../schemas/realm';
 import RNFS from 'react-native-fs';
+import {
+  chooseImageFromCamera,
+  chooseImageFromGallery,
+} from '../../services/ImageManager';
 
 const Edit = (props: any) => {
   const data = props.route.params.data;
 
   const [search, setSearch] = useState(data.title);
-  const [image, setImage] = useState(null);
-  const [type, setType] = useState(null);
+  const [imageData, setImageData]: any = useState(null);
 
-  const convertImageToBinaryData = async () => {
-    const result: any = await launchImageLibrary({mediaType: 'photo'});
-    const url = result.assets[0].uri;
-    const type = result.assets[0].type;
-    setType(type);
-    setImage(url);
+  const pickGalleryImage = async () => {
+    const res = await chooseImageFromGallery();
+    setImageData(res);
   };
 
-  useEffect(() => {
-    let timer = setInterval(() => {
-         // setCounter(counter => counter + 1);
-         console.log("runing")
-       }, 1000);
+  const pickCameraImage = async () => {
+    const res = await chooseImageFromCamera();
+    setImageData(res);
+  };
 
-       return () => clearInterval(timer)
- })
+  const imageManager = async () => {
+    return Alert.alert('Pick images', 'Please select your options', [
+      {
+        text: 'Gallery',
+        onPress: () => pickGalleryImage(),
+      },
+      {text: 'Camera', onPress: () => pickCameraImage()},
+    ]);
+  };
 
   const editManager = async () => {
-    if(!search) {
-        return Alert.alert("Please enter title")
+    if (!search) {
+      return Alert.alert('Please enter title');
     }
-    let imageData : any = null
-    if (image) {
-      const result = await RNFS.readFile(image, 'base64');
-      imageData = result;
+    let image: any = null;
+    if (imageData) {
+      const fileName = Date.now() + imageData.uri.split('/').pop();
+      const destPath = `${RNFS.DocumentDirectoryPath}/${fileName}`;
+      await RNFS.copyFile(imageData.uri, destPath);
+      image = destPath;
     }
     realm.write(() => {
       data.title = search;
-      data.data = imageData ? imageData : data.data
+      data.data = image ? image : data.data;
     });
     props.navigation.goBack();
   };
@@ -62,15 +71,25 @@ const Edit = (props: any) => {
 
         <View style={{height: 30}} />
 
-        <TouchableOpacity onPress={convertImageToBinaryData}>
+        <TouchableOpacity onPress={imageManager}>
           <Text>update Image</Text>
         </TouchableOpacity>
         <View style={{height: 10}} />
-        {image ? (
-          <Image source={{uri: image}} style={{height: 200, width: 200}} />
+        {imageData ? (
+          <Image
+            source={{
+              uri: imageData.uri,
+            }}
+            style={{height: 200, width: 200}}
+          />
         ) : (
           <Image
-            source={{uri: `data:${data.mime};base64,${data.data}`}}
+            source={{
+              uri:
+                Platform.OS === 'android'
+                  ? `file:${data.data}`
+                  : `${data.data}`,
+            }}
             style={{height: 200, width: 200}}
           />
         )}
