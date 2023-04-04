@@ -8,7 +8,7 @@ import {
 export const chooseImageFromGallery = async () => {
   try {
     let res = await checkGalleryPermissions();
-    if (!res) {
+    if (res) {
       const options: any = {
         title: 'Select Image',
         storageOptions: {
@@ -57,7 +57,10 @@ export const chooseImageFromCamera = async () => {
       };
 
       const response: any = await launchCamera(options);
-      if (response.didCancel) {
+      console.log('>>>', response);
+      if (response.errorCode === 'camera_unavailable') {
+        return Alert.alert('Camera not available');
+      } else if (response.didCancel) {
         throw new Error('User cancelled image picker');
       } else if (response.error) {
         throw new Error(response.error);
