@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   ActivityIndicator,
   Alert,
@@ -22,12 +22,18 @@ import {
   chooseImageFromGallery,
 } from '../../services/ImageManager';
 import {generateUniqueId} from '../../utils';
+import {useDispatch, useSelector} from 'react-redux';
+import {setTheme} from '../../redux/theme';
 
 const TodoList = (props: any) => {
+  const theme = useSelector((state: any) => state.theme.theme);
+  const styles = useMemo(() => createStyles(theme), [theme]);
   const [mainData, setMainData] = useState([]);
   const [search, setSearch] = useState('');
   const [imageData, setImageData]: any = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const getTodoData = async () => {
     const data: any = await realm.objects('Todo');
@@ -124,7 +130,7 @@ const TodoList = (props: any) => {
   return (
     <SafeAreaView style={styles.screen}>
       <View style={[styles.screen, {padding: 20}]}>
-        <Text style={{fontSize: 18}}>ToDo List</Text>
+        <Text style={{fontSize: 18, ...styles.text}}>ToDo List</Text>
         {/* <CountdownTimer /> */}
         <FlatList
           data={mainData}
@@ -132,7 +138,7 @@ const TodoList = (props: any) => {
           renderItem={({item}: any) => {
             return (
               <View style={{padding: 10}}>
-                <Text>{item?.title}</Text>
+                <Text style={styles.text}>{item?.title}</Text>
                 <View style={{height: 20}} />
                 <Image
                   source={{
@@ -168,7 +174,8 @@ const TodoList = (props: any) => {
         />
         <TextInput
           placeholder="Type your note..."
-          placeholderTextColor={'black'}
+          placeholderTextColor={theme.textColor}
+          style={{color: theme.textColor}}
           onChangeText={setSearch}
           value={search}
         />
@@ -179,21 +186,29 @@ const TodoList = (props: any) => {
           />
         ) : null}
         <TouchableOpacity onPress={imageManager}>
-          <Text>Pick Image</Text>
+          <Text style={styles.text}>Pick Image</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={createTodo}>
-          <Text>Add</Text>
+          <Text style={styles.text}>Add</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => dispatch(setTheme())}>
+          <Text style={styles.text}>Change Theme</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-});
+const createStyles = (theme: any) =>
+  StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: theme.background,
+    },
+    text: {
+      color: theme.textColor,
+    },
+  });
 
 export default TodoList;
