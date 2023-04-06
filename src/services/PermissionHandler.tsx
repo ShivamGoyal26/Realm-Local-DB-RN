@@ -1,5 +1,5 @@
 import {PERMISSIONS, request} from 'react-native-permissions';
-import {Alert, Linking, Platform} from 'react-native';
+import {Alert, Linking, PermissionsAndroid, Platform} from 'react-native';
 
 export const checkCameraPermission = async () => {
   try {
@@ -35,7 +35,7 @@ export const checkGalleryPermissions = async () => {
     const result = await request(
       Platform.OS === 'ios'
         ? PERMISSIONS.IOS.MEDIA_LIBRARY
-        : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+        : PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
     );
     if (
       result === 'denied' ||
