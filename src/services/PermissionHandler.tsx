@@ -42,7 +42,7 @@ export const checkGalleryPermissions = async () => {
   try {
     const permissionAvailable = await check(
       Platform.OS === 'ios'
-        ? PERMISSIONS.IOS.MEDIA_LIBRARY
+        ? PERMISSIONS.IOS.PHOTO_LIBRARY
         : Platform.Version >= 33
         ? PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
         : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
@@ -52,7 +52,7 @@ export const checkGalleryPermissions = async () => {
     }
     const result = await request(
       Platform.OS === 'ios'
-        ? PERMISSIONS.IOS.MEDIA_LIBRARY
+        ? PERMISSIONS.IOS.PHOTO_LIBRARY
         : Platform.Version >= 33
         ? PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
         : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,

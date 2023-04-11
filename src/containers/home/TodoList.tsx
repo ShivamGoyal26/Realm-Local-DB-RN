@@ -66,12 +66,16 @@ const TodoList = (props: any) => {
 
   const pickGalleryImage = async () => {
     const res = await chooseImageFromGallery();
-    setImageData(res);
+    if (res) {
+      setImageData(res);
+    }
   };
 
   const pickCameraImage = async () => {
     const res = await chooseImageFromCamera();
-    setImageData(res);
+    if (res) {
+      setImageData(res);
+    }
   };
 
   const imageManager = async () => {
