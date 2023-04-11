@@ -91,8 +91,6 @@ PODS:
     - RNPermissions
   - Permission-PhotoLibrary (3.8.0):
     - RNPermissions
-  - Permission-PhotoLibraryAddOnly (3.8.0):
-    - RNPermissions
   - RCT-Folly (2021.07.22.00):
     - boost
     - DoubleConversion
@@ -494,7 +492,6 @@ DEPENDENCIES:
   - OpenSSL-Universal (= 1.1.1100)
   - Permission-Camera (from `../node_modules/react-native-permissions/ios/Camera`)
   - Permission-PhotoLibrary (from `../node_modules/react-native-permissions/ios/PhotoLibrary`)
-  - Permission-PhotoLibraryAddOnly (from `../node_modules/react-native-permissions/ios/PhotoLibraryAddOnly`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -572,8 +569,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-permissions/ios/Camera"
   Permission-PhotoLibrary:
     :path: "../node_modules/react-native-permissions/ios/PhotoLibrary"
-  Permission-PhotoLibraryAddOnly:
-    :path: "../node_modules/react-native-permissions/ios/PhotoLibraryAddOnly"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -670,7 +665,6 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   Permission-Camera: e6d142d7d8b714afe0a83e5e6ae17eb949f1e3e9
   Permission-PhotoLibrary: 31787bbe77d0d3ae6a5267b8435e4a2e9ef78f1d
-  Permission-PhotoLibraryAddOnly: 16c92ad62b802514f3f788e00b298080be996337
   RCT-Folly: 424b8c9a7a0b9ab2886ffe9c3b041ef628fd4fb1
   RCTRequired: 5c6fd63b03abb06947d348dadac51c93e3485bd8
   RCTTypeSafety: 1c66daedd66f674e39ce9f40782f0d490c78b175
@@ -712,6 +706,6 @@ SPEC CHECKSUMS:
   Yoga: ba09b6b11e6139e3df8229238aa794205ca6a02a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 209c9b2c9a5621b544ad2526e626c92a210dba8c
+PODFILE CHECKSUM: d52bd7f664dd4147ed367ae7aac682f45b48c6a7
 
 COCOAPODS: 1.11.3

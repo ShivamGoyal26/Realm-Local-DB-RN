@@ -39,8 +39,6 @@
 	<string>yeh camera access k liye hai</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Add photos in the library</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access please provide</string>
 	<key>UILaunchStoryboardName</key>
